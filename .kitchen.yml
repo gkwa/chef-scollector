@@ -9,7 +9,7 @@ driver:
     - curl -L https://www.chef.io/chef/install.sh | bash -s -- -v 12.6.0
 
 provisioner:
-  name: chef_solo
+  name: policyfile_zero
   environments_path: test/environments
   solo_rb:
     environment: kitchen
