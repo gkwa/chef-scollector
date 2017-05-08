@@ -19,6 +19,7 @@ Requirements
 * Centos
 * Ubuntu
 * Debian
+* Windows
 
 
 ### Dependent Cookbooks

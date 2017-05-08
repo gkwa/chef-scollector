@@ -15,6 +15,7 @@
 # limitations under the License.
 
 [
+  node['scollector']['bin_path'],
   node['scollector']['conf_dir'],
   node['scollector']['collectors_dir']
 ].each do |dir|
@@ -22,6 +23,7 @@
     owner 'root'
     group 'root'
     mode '0755'
+    recursive true
     action :create
   end
 end

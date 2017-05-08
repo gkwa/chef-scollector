@@ -20,11 +20,22 @@ node.default['scollector']['arch'] = _64_bit? ? 'amd64' : '386'
 
 case node['scollector']['install_style']
 when 'source'
+  if windows?
+    Chef::Log.fatal("Installing from source on windows is not yet supported")
+    raise
+  end
   node.default['go']['packages']           	 = ['bosun.org/cmd/scollector']
   node.default['scollector']['bin_path'] 	   = "#{node['go']['gobin']}/scollector"
   include_recipe 'golang::packages'
 else
-  binary = "scollector-#{node['os']}-#{node['scollector']['arch']}"
+  binary = "scollector-#{node['os']}-#{node['scollector']['arch']}#{'.exe' if windows?}"
+
+  filename = node['scollector']['bin_path']
+  directory "#{File.dirname(filename)}" do
+    recursive true
+    mode '0755' unless windows?
+  end
+
   remote_file 'scollector_binary' do
     path node['scollector']['bin_path']
     source [
@@ -32,8 +43,8 @@ else
       node['scollector']['version'],
       binary
     ].join('/')
-    owner 'root'
-    mode '0755'
+    owner 'root' unless windows?
+    mode '0755' unless windows?
     action :create
   end
 end
