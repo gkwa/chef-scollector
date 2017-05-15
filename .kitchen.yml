@@ -3,7 +3,7 @@ transport:
   name: sftp
 driver:
   name: docker
-  binary: /usr/bin/docker
+  binary: /usr/local/bin/docker
   use_sudo: false
   provision_command:
     - curl -L https://www.chef.io/chef/install.sh | bash -s -- -v 12.6.0
