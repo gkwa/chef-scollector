@@ -30,12 +30,6 @@ when 'source'
 else
   binary = "scollector-#{node['os']}-#{node['scollector']['arch']}#{'.exe' if windows?}"
 
-  filename = node['scollector']['bin_path']
-  directory "#{File.dirname(filename)}" do
-    recursive true
-    mode '0755' unless windows?
-  end
-
   remote_file 'scollector_binary' do
     path node['scollector']['bin_path']
     source [
