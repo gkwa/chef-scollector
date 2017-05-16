@@ -35,7 +35,14 @@ template "#{node['scollector']['conf_dir']}/scollector.toml" do
   notifies :restart, 'poise_service[scollector]', :delayed
 end
 
-poise_service 'scollector' do
-  provider node['scollector']['init_style'].to_sym
-  command "#{node['scollector']['bin_path']} -conf=#{node['scollector']['conf_dir']}/scollector.toml -d"
+if windows?
+  nssm 'scollector' do
+    program node['scollector']['bin_path']
+    action :install
+  end
+else
+  poise_service 'scollector' do
+    provider node['scollector']['init_style'].to_sym
+    command "#{node['scollector']['bin_path']} -conf=#{node['scollector']['conf_dir']}/scollector.toml -d"
+  end
 end

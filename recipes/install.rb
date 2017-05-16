@@ -30,6 +30,10 @@ when 'source'
 else
   binary = "scollector-#{node['os']}-#{node['scollector']['arch']}#{'.exe' if windows?}"
 
+  directory "#{File.dirname(node['scollector']['bin_path'])}" do
+    recursive true
+  end
+
   remote_file 'scollector_binary' do
     path node['scollector']['bin_path']
     source [
@@ -40,5 +44,10 @@ else
     owner 'root' unless windows?
     mode '0755' unless windows?
     action :create
+  end
+
+  nssm 'scollector' do
+    program node['scollector']['bin_path']
+    action :install
   end
 end

@@ -12,6 +12,6 @@ default['scollector']['tags']            = {
 }
 
 if node['platform'] == 'windows'
-  default['scollector']['conf_dir']       = 'c:\Program Files\StackExchange\scollector'
-  default['scollector']['collectors_dir'] = 'c:\Program Files\StackExchange\scollector\collectors'
+  default['scollector']['conf_dir']       = "#{ENV['PROGRAMFILES']}/StackExchange/scollector"
+  default['scollector']['collectors_dir'] = "#{ENV['PROGRAMFILES']}/StackExchange/scollector/collectors"
 end
